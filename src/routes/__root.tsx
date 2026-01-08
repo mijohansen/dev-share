@@ -2,10 +2,10 @@
 import { Header } from '@/components/Header';
 import { NotFound } from '@/components/NotFound';
 import { AppContextProvider } from '@/contexts/app-context';
-import { MuiProvider } from '@/contexts/mui-provider';
+import { AppThemeProvider } from '@/contexts/app-theme-provider';
 import { authMiddleware } from '@/middleware/auth';
 import { getCurrentUserFn } from '@/setup/better-auth';
-import { Box } from '@mui/material';
+import { Box } from '@mantine/core';
 import { QueryClient } from '@tanstack/query-core';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { createRootRouteWithContext, HeadContent, Scripts } from '@tanstack/react-router';
@@ -51,13 +51,13 @@ function RootDocument({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <MuiProvider>
+        <AppThemeProvider>
           <AppContextProvider user={user}>
             <Header user={user} />
             <Box className="h-20" />
             {children}
           </AppContextProvider>
-        </MuiProvider>
+        </AppThemeProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

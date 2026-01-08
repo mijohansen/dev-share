@@ -1,10 +1,12 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Text, Title } from '@mantine/core';
 
 export function NotLoggedIn() {
   return (
     <Box>
-      <Typography variant={'h2'}>This text should convice ppl to log inn</Typography>
-      <Typography variant={'body1'}>
+      <Title order={2} mb="lg">
+        This text should convice ppl to log inn
+      </Title>
+      <Text size="md" component="div">
         <p>
           In the modern digital landscape, sharing a file is more than just a data transfer; it is an act of digital
           bridge-building. It is the moment an idea escapes the isolation of a single hard drive and begins its journey
@@ -35,7 +37,7 @@ export function NotLoggedIn() {
           In a world of "read-only" silos, the "share" button is a declaration of
           <strong>collaboration over competition</strong>.
         </p>
-      </Typography>
+      </Text>
     </Box>
   );
 }

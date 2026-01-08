@@ -1,6 +1,6 @@
-import { Logout, Person, Settings } from '@mui/icons-material';
-import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Avatar, Group, Menu, Text, UnstyledButton } from '@mantine/core';
+import { IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
+import { useState } from 'react';
 
 interface UserMenuProps {
   user: {
@@ -11,80 +11,55 @@ interface UserMenuProps {
 }
 
 export function UserMenu({ user }: UserMenuProps) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const [opened, setOpened] = useState(false);
 
   return (
-    <Box className="flex items-center gap-8">
-      <Typography variant="body2" className="text-white/70 hidden sm:block">
+    <Group gap="lg">
+      <Text size="sm" className="text-white/70 hidden sm:block">
         {user.name}
-      </Typography>
-
-      <Tooltip title="Account settings">
-        <IconButton
-          onClick={handleClick}
-          size="small"
-          className="ml-8"
-          aria-controls={open ? 'account-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-        >
-          <Avatar
-            alt={user.name || ''}
-            src={user.image || ''}
-            className="w-[35px] h-[35px] border-2 border-cyan-400 bg-slate-800"
-          >
-            {user.name?.charAt(0)}
-          </Avatar>
-        </IconButton>
-      </Tooltip>
+      </Text>
 
       <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          className:
-            'overflow-visible drop-shadow-[0px_2px_8px_rgba(0,0,0,0.32)] mt-6 bg-slate-800 text-white border border-white/10 [&_.MuiAvatar-root]:w-8 [&_.MuiAvatar-root]:h-8 [&_.MuiAvatar-root]:-ml-2 [&_.MuiAvatar-root]:mr-4',
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        width={200}
+        position="bottom-end"
+        transitionProps={{ transition: 'pop-top-right' }}
+        opened={opened}
+        onChange={setOpened}
+        withinPortal
       >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Person fontSize={'small'} />
-          </ListItemIcon>
-          Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize={'small'} />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <Divider className="bg-white/10" />
-        <MenuItem
-          onClick={() => {
-            /* Add logout logic */
-          }}
-        >
-          <ListItemIcon>
-            <Logout fontSize={'small'} />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        <Menu.Target>
+          <UnstyledButton className="ml-8">
+            <Avatar
+              alt={user.name || ''}
+              src={user.image || ''}
+              className="w-[35px] h-[35px] border-2 border-cyan-400 bg-slate-800"
+              radius="xl"
+            >
+              {user.name?.charAt(0)}
+            </Avatar>
+          </UnstyledButton>
+        </Menu.Target>
+
+        <Menu.Dropdown className="bg-slate-800 text-white border border-white/10">
+          <Menu.Item leftSection={<IconUser size={14} />} className="hover:bg-slate-700">
+            Profile
+          </Menu.Item>
+          <Menu.Item leftSection={<IconSettings size={14} />} className="hover:bg-slate-700">
+            Settings
+          </Menu.Item>
+          <Menu.Divider className="border-white/10" />
+          <Menu.Item
+            color="red"
+            leftSection={<IconLogout size={14} />}
+            onClick={() => {
+              /* Add logout logic */
+            }}
+            className="hover:bg-slate-700"
+          >
+            Logout
+          </Menu.Item>
+        </Menu.Dropdown>
       </Menu>
-    </Box>
+    </Group>
   );
 }

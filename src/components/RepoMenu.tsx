@@ -1,17 +1,5 @@
-import Home from '@mui/icons-material/Home';
-import Settings from '@mui/icons-material/Settings';
-import Share from '@mui/icons-material/Share';
-import {
-  Box,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-} from '@mui/material';
+import { Box, Divider, NavLink, Stack } from '@mantine/core';
+import { IconHome, IconSettings, IconShare } from '@tabler/icons-react';
 import { Link } from '@tanstack/react-router';
 
 interface SidebarProps {
@@ -22,36 +10,29 @@ interface SidebarProps {
 
 export function RepoMenu({ open, onClose, drawerWidth }: SidebarProps) {
   const menuItems = [
-    { text: 'Home', icon: <Home fontSize={'medium'} />, to: '/' },
-    { text: 'Shared Files', icon: <Share fontSize={'medium'} />, to: '/demo' },
-    { text: 'Settings', icon: <Settings fontSize={'medium'} />, to: '/settings' },
+    { text: 'Home', icon: <IconHome size={20} />, to: '/' },
+    { text: 'Shared Files', icon: <IconShare size={20} />, to: '/demo' },
+    { text: 'Settings', icon: <IconSettings size={20} />, to: '/settings' },
   ];
 
   return (
-    <Drawer
-      variant="permanent"
-      className={`w-[${drawerWidth}px] shrink-0 ${open ? 'block' : 'hidden'} md:block [&_.MuiDrawer-paper]:w-[${drawerWidth}px] [&_.MuiDrawer-paper]:box-border [&_.MuiDrawer-paper]:bg-[#0f172a] [&_.MuiDrawer-paper]:text-white [&_.MuiDrawer-paper]:border-r [&_.MuiDrawer-paper]:border-white/10`}
-      open={open}
-      onClose={onClose}
+    <Box
+      component="nav"
+      className={`fixed left-0 top-16 bottom-0 w-[${drawerWidth}px] bg-[#0f172a] text-white border-r border-white/10 z-[100] ${open ? 'block' : 'hidden'} md:block overflow-auto`}
     >
-      <Toolbar />
-      <Box className="overflow-auto" onClick={onClose}>
-        <List>
-          {menuItems.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <ListItemButton
-                component={Link}
-                to={item.to}
-                className="hover:bg-cyan-400/10 active:text-cyan-400 [&.active]:text-cyan-400"
-              >
-                <ListItemIcon className="text-inherit min-w-[40px]">{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider className="bg-white/10 my-8" />
-      </Box>
-    </Drawer>
+      <Stack gap={0} p="xs" onClick={onClose}>
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.text}
+            component={Link}
+            to={item.to}
+            label={item.text}
+            leftSection={item.icon}
+            className="hover:bg-cyan-400/10 text-white rounded-md transition-colors [&.active]:text-cyan-400 [&.active]:bg-cyan-400/10"
+          />
+        ))}
+        <Divider className="border-white/10 my-4" />
+      </Stack>
+    </Box>
   );
 }

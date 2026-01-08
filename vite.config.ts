@@ -11,7 +11,7 @@ const config = defineConfig({
     port: 3000,
   },
   ssr: {
-    noExternal: ['@mui/*'],
+    noExternal: ['@mantine/*'],
   },
   build: { target: 'esnext' },
   plugins: [
