@@ -1,5 +1,5 @@
+import { Logout, Person, Settings } from '@mui/icons-material';
 import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
-import { LogOut, Settings, User } from 'lucide-react';
 import React, { useState } from 'react';
 
 interface UserMenuProps {
@@ -23,8 +23,8 @@ export function UserMenu({ user }: UserMenuProps) {
   };
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', display: { xs: 'none', sm: 'block' } }}>
+    <Box className="flex items-center gap-8">
+      <Typography variant="body2" className="text-white/70 hidden sm:block">
         {user.name}
       </Typography>
 
@@ -32,7 +32,7 @@ export function UserMenu({ user }: UserMenuProps) {
         <IconButton
           onClick={handleClick}
           size="small"
-          sx={{ ml: 2 }}
+          className="ml-8"
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
@@ -40,12 +40,7 @@ export function UserMenu({ user }: UserMenuProps) {
           <Avatar
             alt={user.name || ''}
             src={user.image || ''}
-            sx={{
-              width: 35,
-              height: 35,
-              border: '2px solid #22d3ee',
-              bgcolor: '#1e293b',
-            }}
+            className="w-[35px] h-[35px] border-2 border-cyan-400 bg-slate-800"
           >
             {user.name?.charAt(0)}
           </Avatar>
@@ -60,44 +55,32 @@ export function UserMenu({ user }: UserMenuProps) {
         onClick={handleClose}
         PaperProps={{
           elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            bgcolor: '#1e293b',
-            color: 'white',
-            border: '1px solid rgba(255,255,255,0.1)',
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-          },
+          className:
+            'overflow-visible drop-shadow-[0px_2px_8px_rgba(0,0,0,0.32)] mt-6 bg-slate-800 text-white border border-white/10 [&_.MuiAvatar-root]:w-8 [&_.MuiAvatar-root]:h-8 [&_.MuiAvatar-root]:-ml-2 [&_.MuiAvatar-root]:mr-4',
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <User size={18} color="#94a3b8" />
+            <Person fontSize={'small'} />
           </ListItemIcon>
           Profile
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <Settings size={18} color="#94a3b8" />
+            <Settings fontSize={'small'} />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <Divider sx={{ bgcolor: 'rgba(255,255,255,0.1)' }} />
+        <Divider className="bg-white/10" />
         <MenuItem
           onClick={() => {
             /* Add logout logic */
           }}
         >
           <ListItemIcon>
-            <LogOut size={18} color="#ef4444" />
+            <Logout fontSize={'small'} />
           </ListItemIcon>
           Logout
         </MenuItem>

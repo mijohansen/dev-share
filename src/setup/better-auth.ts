@@ -13,10 +13,21 @@ export const auth = betterAuth({
   plugins: [tanstackStartCookies()], // make sure this is the last plugin in the array
 });
 
-export const getCurrentUserFn = createServerFn({ method: 'GET' }).handler(async () => {
-  const headers = getRequestHeaders();
-  const session = await auth.api.getSession({ headers });
-  // This depends on how you store data in your session
-  // usually set during the /api/auth flow
-  return session?.user || null;
-});
+export const getCurrentUserFn = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<AuthenticatedUser | null> => {
+    const headers = await getRequestHeaders();
+    const session = await auth.api.getSession({ headers });
+    if (session?.user) {
+      const { id, name, email, image } = session.user;
+      return { id, name, email, image };
+    }
+    return null;
+  },
+);
+
+export type AuthenticatedUser = {
+  id: string;
+  email: string;
+  name: string;
+  image?: string | null | undefined;
+};

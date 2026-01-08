@@ -4,11 +4,14 @@ import { getRequestHeaders } from '@tanstack/react-start/server';
 import { redirect } from '@tanstack/router-core';
 
 export const authMiddleware = createMiddleware().server(async ({ next, request }) => {
-  const headers = getRequestHeaders();
+  const headers = await getRequestHeaders();
   const session = await auth.api.getSession({ headers });
   const requestUrl = new URL(request.url);
   if (requestUrl.pathname.startsWith('/api/auth/')) {
     return next();
+  }
+  if (session && requestUrl.pathname === '/') {
+    throw redirect({ to: '/repos' });
   }
   if (session) {
     return next();

@@ -1,38 +1,40 @@
+/// <reference types="vite/client" />
+import { Header } from '@/components/Header';
 import { NotFound } from '@/components/NotFound';
-import { AuthContextProvider } from '@/contexts/auth';
+import { AppContextProvider } from '@/contexts/app-context';
+import { MuiProvider } from '@/contexts/mui-provider';
 import { authMiddleware } from '@/middleware/auth';
-import { theme } from '@/setup/material-ui';
-import { ThemeProvider } from '@mui/system';
+import { getCurrentUserFn } from '@/setup/better-auth';
+import { Box } from '@mui/material';
 import { QueryClient } from '@tanstack/query-core';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { createRootRouteWithContext, HeadContent, Scripts } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
-import type { ReactNode } from 'react';
-import Header from '../components/Header';
+import { type ReactNode } from 'react';
 import appCss from '../styles.css?url';
+
+const head = () => ({
+  meta: [
+    {
+      charSet: 'utf-8',
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1',
+    },
+    {
+      title: 'DEVSHARE',
+    },
+  ],
+  links: [{ rel: 'stylesheet', href: appCss }],
+});
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
 }>()({
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'TanStack Start Starter',
-      },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
+  head: () => head(),
+  beforeLoad: async () => ({
+    user: await getCurrentUserFn(),
   }),
   server: {
     middleware: [authMiddleware],
@@ -42,18 +44,20 @@ export const Route = createRootRouteWithContext<{
 });
 
 function RootDocument({ children }: { children: ReactNode }) {
+  const { user } = Route.useRouteContext();
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
-        <AuthContextProvider>
-          <ThemeProvider theme={theme}>
-            <Header />
+        <MuiProvider>
+          <AppContextProvider user={user}>
+            <Header user={user} />
+            <Box className="h-20" />
             {children}
-          </ThemeProvider>
-        </AuthContextProvider>
+          </AppContextProvider>
+        </MuiProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',
