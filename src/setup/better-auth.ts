@@ -1,6 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
 import { betterAuth } from 'better-auth';
+import { createAuthClient } from 'better-auth/react';
 import { tanstackStartCookies } from 'better-auth/tanstack-start';
 
 export const auth = betterAuth({
@@ -12,6 +13,17 @@ export const auth = betterAuth({
   },
   plugins: [tanstackStartCookies()], // make sure this is the last plugin in the array
 });
+export const authClient = createAuthClient({
+  /** The base URL of the server (optional if you're using the same domain) */
+  baseURL: 'http://localhost:3000',
+});
+export function signOutOfGithub({ onSuccess }: { onSuccess: () => void }) {
+  return authClient.signOut({
+    fetchOptions: {
+      onSuccess,
+    },
+  });
+}
 
 export const getCurrentUserFn = createServerFn({ method: 'GET' }).handler(
   async (): Promise<AuthenticatedUser | null> => {

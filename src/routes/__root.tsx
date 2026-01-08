@@ -8,6 +8,7 @@ import { QueryClient } from '@tanstack/query-core';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { createRootRouteWithContext, HeadContent, Scripts } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { redirect } from '@tanstack/router-core';
 import { type ReactNode } from 'react';
 import appCss from '../styles.css?url';
 
@@ -31,9 +32,17 @@ export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
 }>()({
   head: () => head(),
-  beforeLoad: async () => ({
-    user: await getCurrentUserFn(),
-  }),
+  beforeLoad: async ({ location }) => {
+    const user = await getCurrentUserFn();
+    if (!user && location.pathname !== '/') {
+      throw redirect({
+        to: '/',
+      });
+    }
+    return {
+      user,
+    };
+  },
   server: {
     middleware: [authMiddleware],
   },

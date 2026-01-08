@@ -43,13 +43,23 @@ export function AppHeader() {
         <Group gap="xs">
           <Button
             component={Link}
-            to="/"
+            to="/create"
             variant="subtle"
             color="gray"
             c="dimmed"
             style={{ '&:hover': { color: 'var(--mantine-color-cyan-4)' } }}
           >
             Create
+          </Button>
+          <Button
+            component={Link}
+            to="/repos"
+            variant="subtle"
+            color="gray"
+            c="dimmed"
+            style={{ '&:hover': { color: 'var(--mantine-color-cyan-4)' } }}
+          >
+            Repos
           </Button>
 
           {user ? (
