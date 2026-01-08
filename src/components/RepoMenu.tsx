@@ -21,9 +21,7 @@ export function RepoMenu() {
           c="white"
           style={{
             borderRadius: 'var(--mantine-radius-md)',
-            transition: 'background-color 200ms ease',
-            '&:hover': { backgroundColor: 'rgba(34, 184, 207, 0.1)' },
-            '&[data-active]': { color: 'var(--mantine-color-cyan-4)', backgroundColor: 'rgba(34, 184, 207, 0.1)' },
+            '&[data-active]': { color: 'var(--mantine-color-cyan-4)' },
           }}
         />
       ))}

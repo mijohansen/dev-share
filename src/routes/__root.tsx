@@ -34,7 +34,8 @@ export const Route = createRootRouteWithContext<{
   head: () => head(),
   beforeLoad: async ({ location }) => {
     const user = await getCurrentUserFn();
-    if (!user && location.pathname !== '/') {
+    if (!user && !['/', '/login'].includes(location.pathname)) {
+      // Blocking all that is not logged in
       throw redirect({
         to: '/',
       });
@@ -53,7 +54,7 @@ export const Route = createRootRouteWithContext<{
 function RootDocument({ children }: { children: ReactNode }) {
   const { user } = Route.useRouteContext();
   return (
-    <html lang="en">
+    <html lang="en" data-mantine-color-scheme="dark">
       <head>
         <HeadContent />
       </head>
