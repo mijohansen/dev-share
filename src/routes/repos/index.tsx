@@ -1,6 +1,7 @@
+import { AppLayout } from '@/components/AppLayout';
 import { RepoCard } from '@/components/RepoCard';
 import { getUserRepoListFn } from '@/data/demo.repo-data';
-import { Container, Grid, Stack, Title } from '@mantine/core';
+import { Grid, Stack, Title } from '@mantine/core';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/repos/')({
@@ -11,8 +12,8 @@ export const Route = createFileRoute('/repos/')({
 function RouteComponent() {
   const userRepos = Route.useLoaderData();
   return (
-    <Container size="lg">
-      <Stack gap="lg">
+    <AppLayout>
+      <Stack gap={'lg'}>
         <Title order={2}>Dine prosjekter</Title>
         <Grid gutter="lg">
           {userRepos.map((project) => (
@@ -29,6 +30,6 @@ function RouteComponent() {
           ))}
         </Grid>
       </Stack>
-    </Container>
+    </AppLayout>
   );
 }

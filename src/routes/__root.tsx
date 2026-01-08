@@ -1,11 +1,9 @@
 /// <reference types="vite/client" />
-import { Header } from '@/components/Header';
 import { NotFound } from '@/components/NotFound';
 import { AppContextProvider } from '@/contexts/app-context';
 import { AppThemeProvider } from '@/contexts/app-theme-provider';
 import { authMiddleware } from '@/middleware/auth';
 import { getCurrentUserFn } from '@/setup/better-auth';
-import { Box } from '@mantine/core';
 import { QueryClient } from '@tanstack/query-core';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { createRootRouteWithContext, HeadContent, Scripts } from '@tanstack/react-router';
@@ -46,17 +44,13 @@ export const Route = createRootRouteWithContext<{
 function RootDocument({ children }: { children: ReactNode }) {
   const { user } = Route.useRouteContext();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
         <AppThemeProvider>
-          <AppContextProvider user={user}>
-            <Header user={user} />
-            <Box className="h-20" />
-            {children}
-          </AppContextProvider>
+          <AppContextProvider user={user}>{children}</AppContextProvider>
         </AppThemeProvider>
         <TanStackDevtools
           config={{

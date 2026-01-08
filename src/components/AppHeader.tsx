@@ -1,18 +1,19 @@
 import { UserMenu } from '@/components/header/UserMenu';
-import type { AuthenticatedUser } from '@/setup/better-auth';
-import { Box, Button, Group, Text } from '@mantine/core';
+import { useAppContext } from '@/contexts/app-context';
+import { AppShell, Box, Button, Group, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import logoUrl from '../logo.svg';
 
-export function Header({ user }: { user: AuthenticatedUser | null }) {
-  //
+export function AppHeader() {
+  const { user } = useAppContext();
   return (
-    <Box
-      component="header"
-      className="fixed top-0 left-0 right-0 bg-slate-900/90 backdrop-blur-md border-b border-white/10 z-[9999] h-16 px-4"
+    <AppShell.Header
+      bg="var(--mantine-color-slate-900-90)"
+      style={{ backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}
+      px="md"
     >
       <Group justify="space-between" h="100%">
-        <Box className="flex items-center gap-1">
+        <Box display="flex" style={{ alignItems: 'center', gap: '4px' }}>
           {/* Logo Section */}
           <Link
             to="/"
@@ -27,7 +28,10 @@ export function Header({ user }: { user: AuthenticatedUser | null }) {
               component="span"
               size="lg"
               fw={700}
-              className="ml-2 hidden md:flex font-mono tracking-widest text-white no-underline"
+              ml="xs"
+              visibleFrom="md"
+              c="white"
+              style={{ fontFamily: 'var(--mantine-font-mono)', tracking: '0.1em' }}
             >
               DEVSHARE
             </Text>
@@ -37,7 +41,14 @@ export function Header({ user }: { user: AuthenticatedUser | null }) {
         {/* User/Navigation Section */}
 
         <Group gap="xs">
-          <Button component={Link} to="/" variant="subtle" color="gray" className="text-gray-400 hover:text-cyan-400">
+          <Button
+            component={Link}
+            to="/"
+            variant="subtle"
+            color="gray"
+            c="dimmed"
+            style={{ '&:hover': { color: 'var(--mantine-color-cyan-4)' } }}
+          >
             Create
           </Button>
 
@@ -47,7 +58,7 @@ export function Header({ user }: { user: AuthenticatedUser | null }) {
             <Button
               variant="filled"
               color="cyan"
-              className="bg-cyan-500 hover:bg-cyan-600 normal-case font-bold transition-colors"
+              fw="bold"
               onClick={() => {
                 /* Add login logic here */
               }}
@@ -57,6 +68,6 @@ export function Header({ user }: { user: AuthenticatedUser | null }) {
           )}
         </Group>
       </Group>
-    </Box>
+    </AppShell.Header>
   );
 }
