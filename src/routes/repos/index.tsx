@@ -1,7 +1,6 @@
 import { RepoCard } from '@/components/RepoCard';
 import { getUserRepoListFn } from '@/data/demo.repo-data';
-import { Container, Stack, Typography } from '@mui/material';
-import { Grid } from '@mui/system';
+import { Container, Grid, Stack, Title } from '@mantine/core';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/repos/')({
@@ -12,12 +11,12 @@ export const Route = createFileRoute('/repos/')({
 function RouteComponent() {
   const userRepos = Route.useLoaderData();
   return (
-    <Container maxWidth="lg">
-      <Stack spacing={2}>
-        <Typography variant={'h2'}>Dine prosjekter</Typography>
-        <Grid container spacing={3}>
+    <Container size="lg">
+      <Stack gap="lg">
+        <Title order={2}>Dine prosjekter</Title>
+        <Grid gutter="lg">
           {userRepos.map((project) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={project.id}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }} key={project.id}>
               <RepoCard
                 id={project.id}
                 name={project.name}
@@ -26,7 +25,7 @@ function RouteComponent() {
                 stars={project.stars}
                 updatedAt={project.updatedAt}
               />
-            </Grid>
+            </Grid.Col>
           ))}
         </Grid>
       </Stack>

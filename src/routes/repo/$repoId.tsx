@@ -1,6 +1,6 @@
 import { RepoMenu } from '@/components/RepoMenu';
 import { getUserRepoFn } from '@/data/demo.repo-data';
-import { Box, Container, Stack } from '@mui/material';
+import { Box, Container, Group } from '@mantine/core';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 
@@ -24,11 +24,13 @@ function RepoLayoutComponent() {
   return (
     <>
       <RepoMenu drawerWidth={drawerWidth} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <Container maxWidth="lg" className="mt-48">
-        <Stack direction={'row'}>
-          <Box className={`w-[${drawerWidth}px]`}></Box>
-          <Outlet />
-        </Stack>
+      <Container size="lg" className="mt-48">
+        <Group align="flex-start" wrap="nowrap">
+          <Box className={`w-[${drawerWidth}px] hidden md:block shrink-0`} />
+          <Box className="flex-grow">
+            <Outlet />
+          </Box>
+        </Group>
       </Container>
     </>
   );

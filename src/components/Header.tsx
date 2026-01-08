@@ -1,18 +1,17 @@
 import { UserMenu } from '@/components/header/UserMenu';
 import type { AuthenticatedUser } from '@/setup/better-auth';
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Group, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import logoUrl from '../logo.svg';
 
 export function Header({ user }: { user: AuthenticatedUser | null }) {
   //
   return (
-    <AppBar
-      color={'transparent'}
-      position="fixed"
-      className="bg-slate-900/90 backdrop-blur-md border-b border-white/10 z-9999"
+    <Box
+      component="header"
+      className="fixed top-0 left-0 right-0 bg-slate-900/90 backdrop-blur-md border-b border-white/10 z-[9999] h-16 px-4"
     >
-      <Toolbar className="flex justify-between">
+      <Group justify="space-between" h="100%">
         <Box className="flex items-center gap-1">
           {/* Logo Section */}
           <Link
@@ -24,21 +23,21 @@ export function Header({ user }: { user: AuthenticatedUser | null }) {
             }}
           >
             <img src={logoUrl} alt="Logo" style={{ width: 40, height: 40 }} />
-            <Typography
+            <Text
               component="span"
-              variant="h6"
-              noWrap
-              className="ml-2 hidden md:flex font-mono font-bold tracking-widest text-white no-underline"
+              size="lg"
+              fw={700}
+              className="ml-2 hidden md:flex font-mono tracking-widest text-white no-underline"
             >
               DEVSHARE
-            </Typography>
+            </Text>
           </Link>
         </Box>
 
         {/* User/Navigation Section */}
 
-        <Box className="flex items-center gap-1">
-          <Button component={Link} to="/" className="text-gray-400 hover:text-cyan-400">
+        <Group gap="xs">
+          <Button component={Link} to="/" variant="subtle" color="gray" className="text-gray-400 hover:text-cyan-400">
             Create
           </Button>
 
@@ -46,7 +45,8 @@ export function Header({ user }: { user: AuthenticatedUser | null }) {
             <UserMenu user={user} />
           ) : (
             <Button
-              variant="contained"
+              variant="filled"
+              color="cyan"
               className="bg-cyan-500 hover:bg-cyan-600 normal-case font-bold transition-colors"
               onClick={() => {
                 /* Add login logic here */
@@ -55,8 +55,8 @@ export function Header({ user }: { user: AuthenticatedUser | null }) {
               Sign In
             </Button>
           )}
-        </Box>
-      </Toolbar>
-    </AppBar>
+        </Group>
+      </Group>
+    </Box>
   );
 }

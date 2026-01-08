@@ -9,12 +9,10 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@emotion/cache": "^11.14.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.3.7",
-    "@mui/material": "^7.3.7",
+    "@mantine/core": "^8.3.11",
+    "@mantine/hooks": "^8.3.11",
     "@octokit/rest": "^22.0.1",
+    "@tabler/icons-react": "^3.36.1",
     "@tanstack/react-devtools": "^0.7.0",
     "@tanstack/react-router": "^1.132.0",
     "@tanstack/react-router-devtools": "^1.132.0",
@@ -25,6 +23,7 @@
     "nitro": "latest",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "tailwind-preset-mantine": "^3.0.3",
     "tailwindcss": "^4.0.6",
     "usehooks-ts": "^3.1.1"
   },

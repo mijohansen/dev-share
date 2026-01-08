@@ -1,6 +1,6 @@
 import { FormattedDate } from '@/components/FormattedDate';
-import { Book, Star } from '@mui/icons-material';
-import { Box, Card, CardActionArea, CardContent, Stack, Typography } from '@mui/material';
+import { Box, Card, Group, Text, UnstyledButton } from '@mantine/core';
+import { IconBook, IconStar } from '@tabler/icons-react';
 import { useNavigate } from '@tanstack/react-router';
 
 interface ProjectCardProps {
@@ -19,42 +19,44 @@ export function RepoCard({ id, name, description, language, stars, updatedAt }: 
   const navigateToRepo = (repoId: string) => navigate({ to: '/repo/$repoId/view', params: { repoId } });
   return (
     <Card
-      variant="outlined"
-      className="h-full transition-[transform,border-color] duration-200 hover:-translate-y-1 hover:border-cyan-400"
+      withBorder
+      padding="lg"
+      radius="md"
+      className="h-full transition-[transform,border-color] duration-200 hover:-translate-y-1 hover:border-cyan-400 bg-slate-800"
     >
-      <CardActionArea className="h-full p-2" onClick={() => navigateToRepo(id)}>
-        <CardContent>
-          <Box className="flex items-center mb-6" gap={2}>
-            <Book fontSize={'medium'} className="text-cyan-400" />
-            <Typography variant="h6" component="div" className="text-white font-bold">
-              {name}
-            </Typography>
-          </Box>
+      <UnstyledButton className="h-full w-full" onClick={() => navigateToRepo(id)}>
+        <Box className="flex items-center mb-6" gap="md">
+          <IconBook size={24} className="text-cyan-400" />
+          <Text size="lg" fw={700} className="text-white">
+            {name}
+          </Text>
+        </Box>
 
-          <Typography variant="body2" className="text-slate-400 mb-12 line-clamp-2 overflow-hidden min-h-[3em]">
-            {description || 'No description provided.'}
-          </Typography>
+        <Text size="sm" className="text-slate-400 mb-12 line-clamp-2 overflow-hidden min-h-[3em]">
+          {description || 'No description provided.'}
+        </Text>
 
-          <Stack direction="row" spacing={2} alignItems="center">
+        <Group justify="space-between" align="center" mt="auto">
+          <Group gap="md">
             {language && (
-              <Box className="flex items-center gap-2">
+              <Group gap="xs">
                 <Box
                   className={`w-2.5 h-2.5 rounded-full ${language === 'TypeScript' ? 'bg-[#3178c6]' : 'bg-cyan-400'}`}
                 />
-                <Typography variant="caption" className="text-white">
+                <Text size="xs" className="text-white">
                   {language}
-                </Typography>
-              </Box>
+                </Text>
+              </Group>
             )}
 
-            <Box className="flex items-center gap-2 text-[#94a3b8]">
-              <Star fontSize={'small'} />
-              <Typography variant="caption">{stars}</Typography>
-            </Box>
-            <FormattedDate date={updatedAt} />
-          </Stack>
-        </CardContent>
-      </CardActionArea>
+            <Group gap={4} className="text-[#94a3b8]">
+              <IconStar size={14} />
+              <Text size="xs">{stars}</Text>
+            </Group>
+          </Group>
+          <FormattedDate date={updatedAt} />
+        </Group>
+      </UnstyledButton>
     </Card>
   );
 }
