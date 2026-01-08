@@ -15,7 +15,7 @@ export function UserMenu({ user }: UserMenuProps) {
 
   return (
     <Group gap="lg">
-      <Text size="sm" className="text-white/70 hidden sm:block">
+      <Text size="sm" c="white" opacity={0.7} visibleFrom="sm">
         {user.name}
       </Text>
 
@@ -28,33 +28,34 @@ export function UserMenu({ user }: UserMenuProps) {
         withinPortal
       >
         <Menu.Target>
-          <UnstyledButton className="ml-8">
-            <Avatar
-              alt={user.name || ''}
-              src={user.image || ''}
-              className="w-[35px] h-[35px] border-2 border-cyan-400 bg-slate-800"
-              radius="xl"
-            >
+          <UnstyledButton ml="xl">
+            <Avatar alt={user.name || ''} src={user.image || ''} variant={'filled'} size={'md'} radius="xl">
               {user.name?.charAt(0)}
             </Avatar>
           </UnstyledButton>
         </Menu.Target>
 
-        <Menu.Dropdown className="bg-slate-800 text-white border border-white/10">
-          <Menu.Item leftSection={<IconUser size={14} />} className="hover:bg-slate-700">
+        <Menu.Dropdown>
+          <Menu.Item
+            leftSection={<IconUser size={14} />}
+            style={{ '&:hover': { backgroundColor: 'var(--mantine-color-dark-4)' } }}
+          >
             Profile
           </Menu.Item>
-          <Menu.Item leftSection={<IconSettings size={14} />} className="hover:bg-slate-700">
+          <Menu.Item
+            leftSection={<IconSettings size={14} />}
+            style={{ '&:hover': { backgroundColor: 'var(--mantine-color-dark-4)' } }}
+          >
             Settings
           </Menu.Item>
-          <Menu.Divider className="border-white/10" />
+          <Menu.Divider style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
           <Menu.Item
             color="red"
             leftSection={<IconLogout size={14} />}
             onClick={() => {
               /* Add logout logic */
             }}
-            className="hover:bg-slate-700"
+            style={{ '&:hover': { backgroundColor: 'var(--mantine-color-dark-4)' } }}
           >
             Logout
           </Menu.Item>

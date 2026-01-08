@@ -1,26 +1,54 @@
+import { Box, Button, Container, Stack, Text, Title } from '@mantine/core';
 import { IconArrowLeft, IconQuestionMark } from '@tabler/icons-react';
 import { Link } from '@tanstack/react-router';
 
 export function NotFound() {
   return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center p-6 text-center">
-      <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm shadow-xl">
-        <IconQuestionMark className="w-20 h-20 text-cyan-400 mx-auto mb-6 opacity-80" />
-
-        <h1 className="text-4xl font-black text-white mb-4">404</h1>
-        <h2 className="text-xl font-semibold text-gray-200 mb-2">Page Not Found</h2>
-        <p className="text-gray-400 max-w-xs mx-auto mb-8">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all shadow-lg shadow-cyan-500/30"
+    <Container size="sm">
+      <Stack align="center" justify="center" style={{ minHeight: '60vh' }} p="xl">
+        <Box
+          bg="var(--mantine-color-dark-6)"
+          p="xl"
+          style={{
+            borderRadius: 'var(--mantine-radius-xl)',
+            border: '1px solid var(--mantine-color-dark-4)',
+            backdropFilter: 'blur(8px)',
+            boxShadow: 'var(--mantine-shadow-xl)',
+            textAlign: 'center',
+            width: '100%',
+          }}
         >
-          <IconArrowLeft className="w-4 h-4" />
-          Back to Home
-        </Link>
-      </div>
-    </div>
+          <IconQuestionMark
+            size={80}
+            color="var(--mantine-color-cyan-4)"
+            style={{ marginBottom: 'var(--mantine-spacing-xl)', opacity: 0.8 }}
+          />
+
+          <Title order={1} size={48} c="white" mb="xs" fw={900}>
+            404
+          </Title>
+          <Title order={2} size="xl" c="gray.2" mb="sm" fw={600}>
+            Page Not Found
+          </Title>
+          <Text c="dimmed" maw={320} mx="auto" mb="xl">
+            The page you're looking for doesn't exist or has been moved.
+          </Text>
+
+          <Button
+            component={Link}
+            to="/"
+            leftSection={<IconArrowLeft size={16} />}
+            color="cyan"
+            size="md"
+            radius="md"
+            style={{
+              boxShadow: '0 10px 15px -3px rgba(34, 184, 207, 0.3)',
+            }}
+          >
+            Back to Home
+          </Button>
+        </Box>
+      </Stack>
+    </Container>
   );
 }
