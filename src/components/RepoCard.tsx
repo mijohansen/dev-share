@@ -2,6 +2,7 @@ import { FormattedDate } from '@/components/FormattedDate';
 import { Box, Card, Group, Text } from '@mantine/core';
 import { IconBook, IconStar } from '@tabler/icons-react';
 import { useNavigate } from '@tanstack/react-router';
+import styles from './styles.module.css';
 
 interface ProjectCardProps {
   id: string;
@@ -21,18 +22,13 @@ export function RepoCard({ id, name, description, language, stars, updatedAt }: 
       withBorder
       padding="lg"
       radius="md"
-      component="button"
       onClick={navigateToRepo}
-      h="100%"
-      w="100%"
       bg="var(--mantine-color-dark-6)"
+      className={styles.RepoCard}
       style={{
+        cursor: 'pointer',
         textAlign: 'left',
         transition: 'transform 200ms ease, border-color 200ms ease',
-        '&:hover': {
-          transform: 'translateY(-4px)',
-          borderColor: 'var(--mantine-color-cyan-4)',
-        },
       }}
     >
       <Group justify="flex-start" mb="md">

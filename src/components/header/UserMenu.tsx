@@ -1,5 +1,8 @@
+import styles from '@/components/styles.module.css';
+import { signOutOfGithub } from '@/setup/better-auth';
 import { Avatar, Group, Menu, Text, UnstyledButton } from '@mantine/core';
 import { IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
+import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 
 interface UserMenuProps {
@@ -12,13 +15,9 @@ interface UserMenuProps {
 
 export function UserMenu({ user }: UserMenuProps) {
   const [opened, setOpened] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <Group gap="lg">
-      <Text size="sm" c="white" opacity={0.7} visibleFrom="sm">
-        {user.name}
-      </Text>
-
       <Menu
         width={200}
         position="bottom-end"
@@ -28,13 +27,17 @@ export function UserMenu({ user }: UserMenuProps) {
         withinPortal
       >
         <Menu.Target>
-          <UnstyledButton ml="xl">
-            <Avatar alt={user.name || ''} src={user.image || ''} variant={'filled'} size={'md'} radius="xl">
-              {user.name?.charAt(0)}
-            </Avatar>
+          <UnstyledButton ml="xl" className={styles.UserButton}>
+            <Group gap="xs">
+              <Avatar alt={user.name || ''} src={user.image || ''} variant={'filled'} size={'md'} radius="xl">
+                {user.name?.charAt(0)}
+              </Avatar>
+              <Text size="sm" c="white" opacity={0.7} visibleFrom="sm">
+                {user.name}
+              </Text>
+            </Group>
           </UnstyledButton>
         </Menu.Target>
-
         <Menu.Dropdown>
           <Menu.Item
             leftSection={<IconUser size={14} />}
@@ -52,9 +55,7 @@ export function UserMenu({ user }: UserMenuProps) {
           <Menu.Item
             color="red"
             leftSection={<IconLogout size={14} />}
-            onClick={() => {
-              /* Add logout logic */
-            }}
+            onClick={() => signOutOfGithub({ onSuccess: () => navigate({ to: '/' }) })}
             style={{ '&:hover': { backgroundColor: 'var(--mantine-color-dark-4)' } }}
           >
             Logout

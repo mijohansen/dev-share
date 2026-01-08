@@ -7,19 +7,19 @@ export const authMiddleware = createMiddleware().server(async ({ next, request }
   const headers = await getRequestHeaders();
   const session = await auth.api.getSession({ headers });
   const requestUrl = new URL(request.url);
-  if (requestUrl.pathname.startsWith('/api/auth/')) {
-    return next();
+  const isFrontpage = requestUrl.pathname === '/';
+  const isLoggedIn = !!session;
+  if (requestUrl.pathname === '/login') {
+    const { url: redirectUrl } = await auth.api.signInSocial({
+      body: {
+        provider: 'github', // or any other provider id
+      },
+    });
+    console.log('Logging in with github...');
+    throw redirect({ href: redirectUrl });
   }
-  if (session && requestUrl.pathname === '/') {
+  if (isLoggedIn && isFrontpage) {
     throw redirect({ to: '/repos' });
   }
-  if (session) {
-    return next();
-  }
-  const { url: redirectUrl } = await auth.api.signInSocial({
-    body: {
-      provider: 'github', // or any other provider id
-    },
-  });
-  throw redirect({ href: redirectUrl });
+  return next();
 });
