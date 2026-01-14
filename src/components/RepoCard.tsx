@@ -1,21 +1,13 @@
 import { FormattedDate } from '@/components/FormattedDate';
+import type { RepoData } from '@/data/demo.repo-data';
 import { Box, Card, Group, Text } from '@mantine/core';
 import { IconBook, IconStar } from '@tabler/icons-react';
 import { useNavigate } from '@tanstack/react-router';
 import styles from './styles.module.css';
 
-interface ProjectCardProps {
-  id: string;
-  name: string;
-  description: string | null;
-  language: string | null;
-  stars: number;
-  updatedAt: string;
-}
-
-export function RepoCard({ id, name, description, language, stars, updatedAt }: ProjectCardProps) {
+export function RepoCard({ repoData }: { repoData: RepoData }) {
   const navigate = useNavigate();
-  const navigateToRepo = () => navigate({ to: '/repo/$repoId/view', params: { repoId: id } });
+  const navigateToRepo = () => navigate({ to: '/repo/$repoId/view', params: { repoId: repoData.id } });
 
   return (
     <Card
@@ -34,39 +26,39 @@ export function RepoCard({ id, name, description, language, stars, updatedAt }: 
       <Group justify="flex-start" mb="md">
         <IconBook size={24} color="var(--mantine-color-cyan-4)" />
         <Text size="lg" fw={700} c="white">
-          {name}
+          {repoData.name}
         </Text>
       </Group>
 
       <Text size="sm" c="dimmed" mb="xl" style={{ lineClamp: 2, overflow: 'hidden', minHeight: '3em' }}>
-        {description || 'No description provided.'}
+        {repoData.description || 'No description provided.'}
       </Text>
 
       <Card.Section inheritPadding py="md" mt="auto">
         <Group justify="space-between" align="center">
           <Group gap="md">
-            {language && (
+            {repoData.language && (
               <Group gap="xs">
                 <Box
                   w={10}
                   h={10}
                   style={{
                     borderRadius: '50%',
-                    backgroundColor: language === 'TypeScript' ? '#3178c6' : 'var(--mantine-color-cyan-4)',
+                    backgroundColor: repoData.language === 'TypeScript' ? '#3178c6' : 'var(--mantine-color-cyan-4)',
                   }}
                 />
                 <Text size="xs" c="white">
-                  {language}
+                  {repoData.language}
                 </Text>
               </Group>
             )}
 
             <Group gap={4} c="var(--mantine-color-dark-2)">
               <IconStar size={14} />
-              <Text size="xs">{stars}</Text>
+              <Text size="xs">{repoData.stars}</Text>
             </Group>
           </Group>
-          <FormattedDate date={updatedAt} />
+          <FormattedDate date={repoData.updatedAt} />
         </Group>
       </Card.Section>
     </Card>

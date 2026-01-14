@@ -16,16 +16,9 @@ function RouteComponent() {
       <Stack gap={'lg'}>
         <Title order={2}>Dine prosjekter</Title>
         <Grid gutter="lg">
-          {userRepos.map((project) => (
-            <Grid.Col span={{ base: 12, sm: 6, md: 4 }} key={project.id}>
-              <RepoCard
-                id={project.id}
-                name={project.name}
-                description={project.description}
-                language={project.language}
-                stars={project.stars}
-                updatedAt={project.updatedAt}
-              />
+          {userRepos.map((repoData) => (
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }} key={repoData.id}>
+              <RepoCard repoData={repoData} />
             </Grid.Col>
           ))}
         </Grid>
