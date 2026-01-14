@@ -1,7 +1,16 @@
 import { formatDate } from '@/utils/date-utils';
 import { createServerFn } from '@tanstack/react-start';
 
-const exampleRepoData = [
+export interface RepoData {
+  id: string;
+  name: string;
+  description: string | null;
+  language: string | null;
+  stars: number;
+  updatedAt: string;
+}
+
+const exampleRepoData: RepoData[] = [
   {
     id: '1',
     name: 'tanstack-router-helper',

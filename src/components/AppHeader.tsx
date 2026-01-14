@@ -41,38 +41,18 @@ export function AppHeader() {
         {/* User/Navigation Section */}
 
         <Group gap="xs">
-          <Button
-            component={Link}
-            to="/create"
-            variant="subtle"
-            color="gray"
-            c="dimmed"
-            style={{ '&:hover': { color: 'var(--mantine-color-cyan-4)' } }}
-          >
-            Create
-          </Button>
-          <Button
-            component={Link}
-            to="/repos"
-            variant="subtle"
-            color="gray"
-            c="dimmed"
-            style={{ '&:hover': { color: 'var(--mantine-color-cyan-4)' } }}
-          >
-            Repos
-          </Button>
-
           {user ? (
-            <UserMenu user={user} />
+            <>
+              <Button component={Link} to="/create" variant="subtle" color="gray" c="dimmed">
+                Create
+              </Button>
+              <Button component={Link} to="/repos" variant="subtle" color="gray" c="dimmed">
+                Repos
+              </Button>
+              <UserMenu user={user} />
+            </>
           ) : (
-            <Button
-              variant="filled"
-              color="cyan"
-              fw="bold"
-              onClick={() => {
-                /* Add login logic here */
-              }}
-            >
+            <Button component={'a'} variant="filled" color="cyan" fw="bold" href="/login">
               Sign In
             </Button>
           )}

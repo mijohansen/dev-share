@@ -13,3 +13,4 @@ dist-ssr
 node_modules
 routeTree.gen.ts
 todos.json
+/generated/prisma
